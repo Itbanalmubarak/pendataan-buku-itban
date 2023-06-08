@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klinik Sehat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header h1 {
+            text-align: left;
+            margin: 0;
+            margin-left: 5px;
+            color: #f1f1f1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background-color: #2350e6;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .table-container {
+            margin-top: 30px;
+            color: #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header style="background-color: #521ad4; padding: 12px">
+        <h1>Klinik Sehat</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2>Formulir Pendaftaran Pasien</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="nama">Nama:</label>
+                        <input type="text" id="nama" name="nama" placeholder="Isi Nama Pasien" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="usia">Usia:</label>
+                        <input type="number" id="usia" name="usia" placeholder="Isi Usia" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="poli">Poli:</label>
+                        <select id="poli" name="poli" required></select>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h2>Daftar Pasien</h2>
+                <table id="patient-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Usia</th>
+                            <th>Poli</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- <footer>
+      <marquee behavior="script" direction="script">
+        <p>&copy;Website - Klinik Sehat - Front End</p>
+      </marquee>
+    </footer> -->
+
+    <script>
+        // document
+        //   .getElementById("registration-form")
+        //   .addEventListener("submit", function (event) {
+        //     event.preventDefault();
+      
+        //     var nama = document.getElementById("nama").value;
+        //     var usia = document.getElementById("usia").value;
+        //     var poli = document.getElementById("poli").value;
+      
+        //     var table = document
+        //       .getElementById("patient-table")
+        //       .getElementsByTagName("tbody")[0];
+        //     var row = table.insertRow(-1);
+        //     var cell1 = row.insertCell(0);
+        //     var cell2 = row.insertCell(1);
+        //     var cell3 = row.insertCell(2);
+        //     cell1.innerHTML = nama;
+        //     cell2.innerHTML = usia;
+        //     cell3.innerHTML = poli;
+      
+        //     document.getElementById("nama").value = "";
+        //     document.getElementById("usia").value = "";
+        //     document.getElementById("poli").value = "";
+        //   });
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      
+      <script>
+          const getKlinik = async () => {
+              await axios.get('https://database.politekniklp3i-tasikmalaya.ac.id/api/klinik')
+                  .then((response) => { // Perubahan di bagian ini
+                      console.log(response.data);
+                      let bucket = '';
+                      let kliniks = response.data.kliniks;
+                      kliniks.forEach(klinik, i=> {
+                          bucket += `
+                          <tr>
+                            <td>${i + 1}</td>
+                            <td>${klinik.name}</td>
+                            <td>${klinik.usia}</td>
+                            <td>${klinik.poli}</td>
+                            </tr>
+                          `;
+                      });
+                      document.getElementById('kliniks').innerHTML = bucket;
+                  })
+                  .catch((error) => { // Perubahan di bagian ini
+                      console.log(error.message);
+                  });
+          }
+          getKlinik();
+        // 
+          const getPoli = async () => {
+              await axios.get('https://database.politekniklp3i-tasikmalaya.ac.id/api/poli')
+                  .then((response) => { // Perubahan di bagian ini
+                      console.log(response.data);
+                      let bucket = '';
+                      let polis = response.data;
+                      polis.forEach(poli => {
+                          bucket += `
+                          <option value="${poli.name}">${poli.name}</option>
+                          `;
+                      });
+                      document.getElementById('poli').innerHTML = bucket;
+                  })
+                  .catch((error) => { // Perubahan di bagian ini
+                      console.log(error.message);
+                  });
+          }
+          getPoli();
+      </script>
+</body>
+
+</html>
