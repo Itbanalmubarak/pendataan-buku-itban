@@ -4,63 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klinik Sehat</title>
+    <title>Pendataan Buku</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-        }
-
-        header h1 {
-            text-align: left;
-            margin: 0;
-            margin-left: 5px;
-            color: #f1f1f1;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
             padding: 20px;
         }
 
-        .form-container {
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #2ECC71; /* Warna latar belakang header */
+            color: #fff; /* Warna teks pada header */
+        }
+
+        form {
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 10px;
-        }
-
         label {
-            display: block;
             font-weight: bold;
         }
 
-        input[type="text"],
-        input[type="number"],
-        select {
+        input[type="text"] {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            background-color: #2350e6;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .table-container {
-            margin-top: 30px;
-            color: #000;
+            padding: 5px;
+            margin-bottom: 10px;
         }
 
         table {
@@ -68,141 +38,207 @@
             border-collapse: collapse;
         }
 
-        table th,
-        table td {
+        th,
+        td {
             padding: 8px;
-            border: 1px solid #ccc;
+            text-align: left;
+            border-bottom: 1px solid orange;
+        }
+
+        th {
+            background-color: #F0D485;
+        }
+
+        button.save-button {
+            background-color: blue;
+        }
+            button.delete-button {
+            background-color: red;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2ECC71;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #eab0c3;
+            
         }
 
         footer {
-            background-color: #f1f1f1;
-            bottom: 0;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #2ECC71; /* Warna latar belakang footer */
+            color: #fff; /* Warna teks pada footer */
         }
     </style>
 </head>
 
 <body>
-    <header style="background-color: #521ad4; padding: 12px">
-        <h1>Klinik Sehat</h1>
-    </header>
+    <h1>Pendataan Buku</h1>
+    <form>
+        <label for="judul">Judul:</label><br>
+        <input type="text" id="judul" name="judul"><br>
 
-    <main>
-        <div class="container">
-            <div class="form-container">
-                <h2>Formulir Pendaftaran Pasien</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="nama">Nama:</label>
-                        <input type="text" id="nama" name="nama" placeholder="Isi Nama Pasien" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="usia">Usia:</label>
-                        <input type="number" id="usia" name="usia" placeholder="Isi Usia" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="poli">Poli:</label>
-                        <select id="poli" name="poli" required></select>
-                    </div>
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
+        <label for="penulis">Penulis:</label><br>
+        <input type="text" id="penulis" name="penulis"><br>
 
-            <div class="table-container">
-                <h2>Daftar Pasien</h2>
-                <table id="patient-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Usia</th>
-                            <th>Poli</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+        <label for="penerbit">Penerbit:</label><br>
+        <input type="text" id="penerbit" name="penerbit"><br>
 
-    <!-- <footer>
-      <marquee behavior="script" direction="script">
-        <p>&copy;Website - Klinik Sehat - Front End</p>
-      </marquee>
-    </footer> -->
+        <label for="tahun_terbit">Tahun Terbit:</label><br>
+        <input type="text" id="tahun_terbit" name="tahun_terbit"><br>
 
+        <label for="harga">Harga:</label><br>
+        <input type="text" id="harga" name="harga"><br>
+
+        <label for="stok">Stok:</label><br>
+        <input type="text" id="stok" name="stok"><br>
+
+        <button type="button" onclick="saveData()" id="button" class="save-button">Save</button>
+    </form>
+
+    <h2>Daftar Buku</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Judul</th>
+                <th>Penulis</th>
+                <th>Penerbit</th>
+                <th>Tahun Terbit</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="books"></tbody>
+    </table>
+
+    <footer>
+        <p>Website by Itban Al Mubarak Attasiky - Pendataan Buku - Front End</p>
+    </footer>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        // document
-        //   .getElementById("registration-form")
-        //   .addEventListener("submit", function (event) {
-        //     event.preventDefault();
-      
-        //     var nama = document.getElementById("nama").value;
-        //     var usia = document.getElementById("usia").value;
-        //     var poli = document.getElementById("poli").value;
-      
-        //     var table = document
-        //       .getElementById("patient-table")
-        //       .getElementsByTagName("tbody")[0];
-        //     var row = table.insertRow(-1);
-        //     var cell1 = row.insertCell(0);
-        //     var cell2 = row.insertCell(1);
-        //     var cell3 = row.insertCell(2);
-        //     cell1.innerHTML = nama;
-        //     cell2.innerHTML = usia;
-        //     cell3.innerHTML = poli;
-      
-        //     document.getElementById("nama").value = "";
-        //     document.getElementById("usia").value = "";
-        //     document.getElementById("poli").value = "";
-        //   });
-      </script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      
-      <script>
-          const getKlinik = async () => {
-              await axios.get('https://database.politekniklp3i-tasikmalaya.ac.id/api/klinik')
-                  .then((response) => { // Perubahan di bagian ini
-                      console.log(response.data);
-                      let bucket = '';
-                      let kliniks = response.data.kliniks;
-                      kliniks.forEach(klinik, i=> {
-                          bucket += `
-                          <tr>
-                            <td>${i + 1}</td>
-                            <td>${klinik.name}</td>
-                            <td>${klinik.usia}</td>
-                            <td>${klinik.poli}</td>
+        const saveData = async () => {
+            let judulForm = document.getElementById("judul").value;
+            let penulisForm = document.getElementById("penulis").value;
+            let penerbitForm = document.getElementById("penerbit").value;
+            let tahun_terbitForm = document.getElementById("tahun_terbit").value;
+            let hargaForm = document.getElementById("harga").value;
+            let stokForm = document.getElementById("stok").value;
+            await axios.post(' http://103.163.110.11:3031/books', {
+                    judul: judulForm,
+                    penulis: penulisForm,
+                    penerbit: penerbitForm,
+                    tahun_terbit: tahun_terbitForm,
+                    harga: hargaForm,
+                    stok: stokForm
+                })
+                .then((response) => {
+                    alert('Data berhasil disimpan!');
+                    getBooks();
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        }
+
+        const getBooks = async () => {
+            await axios.get(' http://103.163.110.11:3031/books')
+                .then((response) => {
+                    let bucket = '';
+                    let books = response.data;
+                    books.forEach((book, i) => {
+                        bucket += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${book.judul}</td>
+                                <td>${book.penulis}</td>
+                                <td>${book.penerbit}</td>
+                                <td>${book.tahun_terbit}</td>
+                                <td>${book.harga}</td>
+                                <td>${book.stok}</td>
+                                <td>
+                                    <button onclick="editData('${book.id}','${book.judul}','${book.penulis}','${book.penerbit}','${book.tahun_terbit}','${book.harga}','${book.stok}')" class="edit-button">edit</button>
+                                    <button onclick="deleteData(${book.id})" class="delete-button">delete</button>
+                                </td>
                             </tr>
-                          `;
-                      });
-                      document.getElementById('kliniks').innerHTML = bucket;
-                  })
-                  .catch((error) => { // Perubahan di bagian ini
-                      console.log(error.message);
-                  });
-          }
-          getKlinik();
-        // 
-          const getPoli = async () => {
-              await axios.get('https://database.politekniklp3i-tasikmalaya.ac.id/api/poli')
-                  .then((response) => { // Perubahan di bagian ini
-                      console.log(response.data);
-                      let bucket = '';
-                      let polis = response.data;
-                      polis.forEach(poli => {
-                          bucket += `
-                          <option value="${poli.name}">${poli.name}</option>
-                          `;
-                      });
-                      document.getElementById('poli').innerHTML = bucket;
-                  })
-                  .catch((error) => { // Perubahan di bagian ini
-                      console.log(error.message);
-                  });
-          }
-          getPoli();
-      </script>
+                        `;
+                    });
+                    document.getElementById('books').innerHTML = bucket;
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        }
+        getBooks();
+
+        const deleteData = async (id) => {
+            await axios.delete(` http://103.163.110.11:3031/books/${id}`)
+                .then((response) => {
+                    alert('Data berhasil dihapus');
+                    getBooks();
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        }
+
+        const editData = (id, judul, penulis, penerbit, tahun_terbit, harga, stok) => {
+            document.getElementById('judul').value = judul;
+            document.getElementById('penulis').value = penulis;
+            document.getElementById('penerbit').value = penerbit;
+            document.getElementById('tahun_terbit').value = tahun_terbit;
+            document.getElementById('harga').value = harga;
+            document.getElementById('stok').value = stok;
+            document.getElementById('button').innerText = 'Update';
+            document.getElementById('button').setAttribute('onclick', `updateData(${id})`);
+        }
+
+        const updateData = async (id) => {
+    let judulForm = document.getElementById("judul").value;
+    let penulisForm = document.getElementById("penulis").value;
+    let penerbitForm = document.getElementById("penerbit").value;
+    let tahun_terbitForm = document.getElementById("tahun_terbit").value;
+    let hargaForm = document.getElementById("harga").value;
+    let stokForm = document.getElementById("stok").value;
+    await axios
+        .patch(`http://103.163.110.11:3031/books/${id}`, {
+            judul: judulForm,
+            penulis: penulisForm,
+            penerbit: penerbitForm,
+            tahun_terbit: tahun_terbitForm,
+            harga: hargaForm,
+            stok: stokForm,
+        })
+        .then((response) => {
+            alert("Data berhasil diubah");
+            getBooks();
+            resetForm();
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+};
+
+const resetForm = () => {
+    document.getElementById("judul").value = "";
+    document.getElementById("penulis").value = "";
+    document.getElementById("penerbit").value = "";
+    document.getElementById("tahun_terbit").value = "";
+    document.getElementById("harga").value = "";
+    document.getElementById("stok").value = "";
+    document.getElementById("button").innerText = "Save";
+    document.getElementById("button").setAttribute("onclick", "saveData()");
+};
+
+    </script>
 </body>
 
 </html>
